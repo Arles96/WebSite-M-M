@@ -44,6 +44,7 @@ class Router {
     public function setUri()
     {
     $this->uri = explode('/', URI);
+    //var_dump($this->uri);
     }
 
     /**
@@ -51,7 +52,7 @@ class Router {
     */
     public function setController()
     {
-    $this->controller = $this->uri[2] === '' ? DEFAULT_CONTROLLER : $this->uri[2];
+        $this->controller = $this->uri[2] === '' ? DEFAULT_CONTROLLER : $this->uri[2];        
     }
 
     /**
@@ -59,7 +60,7 @@ class Router {
     */
     public function setMethod()
     {
-    $this->method = ! empty($this->uri[3]) ? $this->uri[3] : 'exec';
+        $this->method = ! empty($this->uri[3]) ? $this->uri[3] : 'exec';
     }
 
     /**
@@ -82,7 +83,7 @@ class Router {
     */
     public function getUri()
     {
-    return $this->uri;
+        return $this->uri;
     }
 
     /**
@@ -90,7 +91,7 @@ class Router {
     */
     public function getController()
     {
-    return $this->controller;
+        return $this->controller;
     }
 
     /**
@@ -98,7 +99,7 @@ class Router {
     */
     public function getMethod()
     {
-    return $this->method;
+        return $this->method;
     }
 
     /**

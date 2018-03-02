@@ -20,7 +20,7 @@ define('ROOT', $_SERVER['DOCUMENT_ROOT']);
 
 define('PATH_VIEWS', FOLDER_PATH.'/website/views/');
 
-define('PATH_CONTROLLERS', FOLDER_PATH.'/website/controllers/');
+define('PATH_CONTROLLERS', 'website/controllers/');
 
 define('HELPER_PATH', '/system/helpers');
 

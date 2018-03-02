@@ -30,13 +30,15 @@ class View {
     }
     
     protected function render(){
-        $file = ROOT.PATH_VIEWS . $template.".php";
+        $file = ROOT.'/'.PATH_VIEWS .$this->template .".php";
         if (is_file($file))
         {
             extract($this->params);
             ob_start();
             require($file);
+            $obj = ob_get_contents();
             ob_end_clean();
+            echo $obj;
         }else {
             throw new Exception("Error, no existe la plantilla en $file");
         }

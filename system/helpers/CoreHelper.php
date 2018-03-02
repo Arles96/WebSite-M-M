@@ -12,7 +12,7 @@ class CoreHelper {
      * @var string $controller
      */
     public static function validateController($controller){
-        if(!is_file(PATH_CONTROLLERS."{$controller}/Controller.php")){
+        if(!is_file(PATH_CONTROLLERS."{$controller}Controller.php")){
             return false;
         }
         return true;
@@ -24,7 +24,6 @@ class CoreHelper {
      * @var string method
      */
     public static function validateMethodController($controller, $method){
-        $controller .= "Controller";
         if (!method_exists($controller, $method)){
             return false;
         }
