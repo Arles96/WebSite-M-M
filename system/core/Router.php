@@ -1,5 +1,7 @@
 <?php
 
+defined('BASEPATH') or exit('No se permite el acceso');
+
 /**
  * Esta clase define las rutas del sitio web
  *
@@ -32,10 +34,10 @@ class Router {
     */
     public function __construct()
     {
-    $this->setUri();
-    $this->setController();
-    $this->setMethod();
-    $this->setParam();
+        $this->setUri();
+        $this->setController();
+        $this->setMethod();
+        $this->setParam();
     }
 
     /**
@@ -43,8 +45,7 @@ class Router {
     */
     public function setUri()
     {
-    $this->uri = explode('/', URI);
-    //var_dump($this->uri);
+        $this->uri = explode('/', URI);
     }
 
     /**
@@ -86,7 +87,7 @@ class Router {
         return $this->uri;
     }
 
-    /**
+    /**Retirna el controlador
     * @return $controller
     */
     public function getController()
@@ -95,6 +96,7 @@ class Router {
     }
 
     /**
+     * Retorna el metodo del controlador
     * @return $method
     */
     public function getMethod()
@@ -103,6 +105,7 @@ class Router {
     }
 
     /**
+     * Retorna el parametro
     * @return $param
     */
     public function getParam()

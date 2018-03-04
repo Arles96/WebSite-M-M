@@ -1,7 +1,9 @@
  <?php
 
+ defined('BASEPATH') or exit('No se permite el acceso');
+ 
 /**
- * Description of Model
+ * Esta clase permite la conexion a la base de datos
  *
  * @author Arles Cerrato
  */

@@ -9,34 +9,25 @@ require 'system/core/autoload.php';
 /*
  * Nivel de errores notificados
  */
-
 error_reporting(ERROR_REPORTING_LEVEL);
 
 /*
  * Inicializa la URI
  */
-
 $router = new Router();
-
 $controller2 =  $router->getController();
 $method = $router->getMethod();
 $param = $router->getParam();
 
-//var_dump($controller2);
-
 /*
  * Validaciones del controlador y del metodo
  */
-
 require 'system/helpers/CoreHelper.php';
-
-
 
 if (!CoreHelper::validateController($controller2))
 {
     $controller2 = "ErrorPage";
 }
-
 
 require PATH_CONTROLLERS."{$controller2}Controller.php";
 
@@ -52,8 +43,3 @@ if (!CoreHelper::validateMethodController($controller2, $method))
  */
 $controller = new $controller2();
 $controller->$method($param);
-
-
-
-
-

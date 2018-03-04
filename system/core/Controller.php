@@ -1,4 +1,7 @@
 <?php
+
+defined('BASEPATH') or exit('No se permite el acceso');
+
 /**
  * Clase padre que se utilizara para controlar las datos y las vistas del sitio web
  *

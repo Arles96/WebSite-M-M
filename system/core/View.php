@@ -1,5 +1,7 @@
 <?php
 
+defined('BASEPATH') or exit('No se permite el acceso');
+
 /**
  * Clase padre que se utilizara para mostrar las plantillas de html
  *
@@ -29,6 +31,9 @@ class View {
         $this->render();
     }
     
+    /*
+     * Renderiza la pantilla solicitada
+     */
     protected function render(){
         $file = ROOT.'/'.PATH_VIEWS .$this->template .".php";
         if (is_file($file))

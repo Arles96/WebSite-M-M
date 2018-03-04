@@ -1,5 +1,7 @@
 <?php
 
+defined('BASEPATH') or exit('No se permite el acceso');
+
 /**
  *Esta clase ayuda a verificar si existe el controllador
  *
