@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 27-03-2018 a las 21:47:02
+-- Tiempo de generación: 27-03-2018 a las 23:49:58
 -- Versión del servidor: 10.1.26-MariaDB
 -- Versión de PHP: 7.1.9
 
@@ -46,6 +46,12 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `DELETE_CLIENTE` (`NUMERO_CLIENTE2` 
     INSERT INTO bitacora(CORREO_ADM, DESCRIPCION, FECHA) VALUES (ADMIN, CONCAT('Se ha eliminado el cliente: ', NUMERO_CLIENTE), NOW());
 END$$
 
+CREATE DEFINER=`root`@`localhost` PROCEDURE `DELETE_INFORMACION` (`NUMERO_INFO2` INT, `ADMIN` VARCHAR(80))  BEGIN 
+	DELETE FROM informacion WHERE NUMERO_INFO=NUMERO_INFO2;
+    INSERT INTO actualiza(CORREO, NUM_INFO) VALUES (ADMIN, NUMERO_INFO2);
+    INSERT INTO bitacora(CORREO_ADM, DESCRIPCION, FECHA) VALUES (ADMIN, 'Se ha realizado una accion en la tabla informacion', NOW());
+END$$
+
 CREATE DEFINER=`root`@`localhost` PROCEDURE `DELETE_PUBLICIDAD` (`CODIGO2` INT, `ADMIN` VARCHAR(80))  BEGIN 
 	DELETE FROM publicidad WHERE CODIGO=CODIGO2;
     INSERT INTO crud(CODIGOPUBLICIDAD, CORREO) VALUES (CODIGO2, ADMIN);
@@ -53,6 +59,21 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `DELETE_PUBLICIDAD` (`CODIGO2` INT, 
 END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `INSERT_CLIENTE` (`NOMBRE2` VARCHAR(100), `MENSAJE2` TEXT, `CORREO2` VARCHAR(100), `TELEFONO2` VARCHAR(18))  INSERT INTO cliente(FECHA, NOMBRE, MENSAJE, CORREO, TELEFONO) VALUES (NOW(), NOMBRE2, MENSAJE2, CORREO2, TELEFONO2)$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `INSERT_INFORMATION` (`NOSOTROS2` TEXT, `CONTACTO2` TEXT, `ADMIN` VARCHAR(80))  BEGIN 
+	DECLARE NUM INT;
+    DECLARE INFO INT;
+    SET NUM = (SELECT COUNT(*) FROM informacion);
+    IF (NUM=0) THEN 
+    	INSERT INTO informacion(NOSOTROS, CONTACTO) VALUES (NOSOTROS2, CONTACTO2);
+        SET INFO = (SELECT NUMERO_INFO FROM informacion);
+        INSERT INTO actualiza(CORREO, NUM_ACT) VALUES (ADMIN, INFO);
+        INSERT INTO bitacora(CORREO_ADM, DESCRIPCION, FECHA) VALUES (ADMIN, 'Se ha relizado una accion en la tabla informacion', NOW());
+      	SELECT TRUE;
+    ELSE 
+    	SELECT FALSE;
+    END IF;
+END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `INSERT_PUBLICIDAD` (`CODIGO2` INT, `NOMBRE2` VARCHAR(80), `TIPO2` VARCHAR(40), `DESCRIPCION2` TEXT, `PRECIO2` FLOAT, `IMAGEN2` VARCHAR(255), `ADMIN` VARCHAR(80))  BEGIN 
 	IF (PRECIO2>=0) THEN 
@@ -76,6 +97,12 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `UPDATE_CLIENTE` (`NUMERO_CLIENTE2` 
     INSERT INTO bitacora(CORREO_ADM, DESCRIPCION, FECHA) VALUES (ADMIN, CONCAT('Se realizo un edicion en el cliente: ', NUMERO_CLIENTE), NOW());
 END$$
 
+CREATE DEFINER=`root`@`localhost` PROCEDURE `UPDATE_INFORMACION` (`NUMERO_INFO2` INT, `NOSOTROS2` TEXT, `CONTACTO` TEXT, `ADMIN` VARCHAR(80))  BEGIN 
+	UPDATE informacion SET NOSOTROS=NOSOTROS2, CONTACTO=CONTACTO2 WHERE NUMERO_INFO=NUMERO_INFO2;
+    INSERT INTO actualiza(CORREO, NUM_INFO) VALUES (ADMIN, NUMERO_INFO2);
+    INSERT INTO bitacora(CORREO_ADM, DESCRIPCION, FECHA) VALUES (ADMIN, 'Se ha realizado una acción en la tabla informacion', NOW());
+END$$
+
 CREATE DEFINER=`root`@`localhost` PROCEDURE `UPDATE_PUBLICIDAD` (`CODIGO2` INT, `NOMBRE2` VARCHAR(80), `TIPO2` VARCHAR(40), `DESCRIPCION2` TEXT, `PRECIO2` FLOAT, `IMAGEN2` VARCHAR(255), `ADMIN` VARCHAR(80))  BEGIN 
 	IF (PRECIO2>=0) THEN 
     	UPDATE publicidad SET NOMBRE=NOMBRE2, TIPO=TIPO2, DESCRIPCION=DESCRIPCION2, PRECIO2=PRECIO, IMAGEN=IMAGEN2 WHERE CODIGO=CODIGO2;
@@ -88,6 +115,18 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `UPDATE_PUBLICIDAD` (`CODIGO2` INT, 
 END$$
 
 DELIMITER ;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `actualiza`
+--
+
+CREATE TABLE `actualiza` (
+  `num_act` int(11) NOT NULL,
+  `correo` varchar(80) DEFAULT NULL,
+  `num_info` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -155,6 +194,18 @@ CREATE TABLE `ediciones` (
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `informacion`
+--
+
+CREATE TABLE `informacion` (
+  `numero_info` int(11) NOT NULL,
+  `nosotros` text NOT NULL,
+  `contacto` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `publicidad`
 --
 
@@ -170,6 +221,14 @@ CREATE TABLE `publicidad` (
 --
 -- Índices para tablas volcadas
 --
+
+--
+-- Indices de la tabla `actualiza`
+--
+ALTER TABLE `actualiza`
+  ADD PRIMARY KEY (`num_act`),
+  ADD KEY `correo` (`correo`),
+  ADD KEY `num_info` (`num_info`);
 
 --
 -- Indices de la tabla `administrador`
@@ -207,6 +266,12 @@ ALTER TABLE `ediciones`
   ADD KEY `correo` (`correo`);
 
 --
+-- Indices de la tabla `informacion`
+--
+ALTER TABLE `informacion`
+  ADD PRIMARY KEY (`numero_info`);
+
+--
 -- Indices de la tabla `publicidad`
 --
 ALTER TABLE `publicidad`
@@ -215,6 +280,12 @@ ALTER TABLE `publicidad`
 --
 -- AUTO_INCREMENT de las tablas volcadas
 --
+
+--
+-- AUTO_INCREMENT de la tabla `actualiza`
+--
+ALTER TABLE `actualiza`
+  MODIFY `num_act` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `bitacora`
@@ -241,8 +312,21 @@ ALTER TABLE `ediciones`
   MODIFY `num_ediciones` int(11) NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT de la tabla `informacion`
+--
+ALTER TABLE `informacion`
+  MODIFY `numero_info` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- Restricciones para tablas volcadas
 --
+
+--
+-- Filtros para la tabla `actualiza`
+--
+ALTER TABLE `actualiza`
+  ADD CONSTRAINT `actualiza_ibfk_1` FOREIGN KEY (`correo`) REFERENCES `administrador` (`correo`),
+  ADD CONSTRAINT `actualiza_ibfk_2` FOREIGN KEY (`num_info`) REFERENCES `informacion` (`numero_info`);
 
 --
 -- Filtros para la tabla `bitacora`
