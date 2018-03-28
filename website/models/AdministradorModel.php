@@ -16,5 +16,12 @@ class AdministradorModel extends Model {
         }
     }
     
+    public function login($correo, $contrasenia){
+        $correo2 = $this->db->real_escape_string($correo);
+        $contrasenia2 = $this->db->real_escape_string($contrasenia);
+        $sql = "CALL LOGIN({$correo2}, {$contrasenia2}";
+        return $this->db->query($sql);        
+    }
+    
 }
 

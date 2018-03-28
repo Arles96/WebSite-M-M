@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 28-03-2018 a las 03:14:49
+-- Tiempo de generación: 28-03-2018 a las 06:23:12
 -- Versión del servidor: 10.1.26-MariaDB
 -- Versión de PHP: 7.1.9
 
@@ -86,6 +86,8 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `INSERT_PUBLICIDAD` (`CODIGO2` INT, 
     END IF;
 END$$
 
+CREATE DEFINER=`root`@`localhost` PROCEDURE `LOGIN` (IN `CORREO2` VARCHAR(80), IN `CONTRASENIA2` VARCHAR(70))  SELECT CORREO FROM administrador WHERE CORREO=CORREO2 AND AES_DECRYPT(contrasenia, 'CONTRASENIA')=CONTRASENIA2$$
+
 CREATE DEFINER=`root`@`localhost` PROCEDURE `UPDATE_ADMINISTRADOR` (`CORREO2` VARCHAR(80), `CORREO3` VARCHAR(80), `CONTRASENIA2` VARCHAR(70), `ADMIN` VARCHAR(80))  BEGIN 
 	UPDATE administrador SET CORREO=CORREO3, CONTRASENIA=AES_ENCRYPT(CONTRASENIA2,'CONTRASENIA') WHERE CORREO=CORREO3;
     INSERT INTO bitacora(CORREO_ADM, DESCRIPCION, FECHA) VALUES (ADMIN, CONCAT('Ha actualizado los datos del administrador: ', CORREO2), NOW());
@@ -138,6 +140,14 @@ CREATE TABLE `administrador` (
   `correo` varchar(80) NOT NULL,
   `contrasenia` varchar(70) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Volcado de datos para la tabla `administrador`
+--
+
+INSERT INTO `administrador` (`correo`, `contrasenia`) VALUES
+('arles.cerrato@gmail.com', 'ÞcX¥DyÄ¦¯UÏ\0eZýä'),
+('aulio.cerrato@gmail.com', 'ÀáJAû0ùKp\"{Ù');
 
 -- --------------------------------------------------------
 
