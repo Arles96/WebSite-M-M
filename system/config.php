@@ -18,6 +18,11 @@ define('PATH_CONTROLLERS', 'website/controllers/');
 define('HELPER_PATH', '/system/helpers');
 define('LIBS_ROUTE', ROOT.FOLDER_PATH.'/system/libs/');
 
+/**
+ * Ruta para las imagenes
+ */
+define('PATH_IMG', './public/img/');
+
 /*
  * Valores de Core
  */

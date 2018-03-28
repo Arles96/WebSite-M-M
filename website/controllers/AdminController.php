@@ -1,7 +1,5 @@
 <?php
 
-defined('BASEPATH') or exit('No se permite el acceso');
-
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -9,19 +7,15 @@ defined('BASEPATH') or exit('No se permite el acceso');
  */
 
 /**
- * Description of ErrorPageController
+ * Description of AdminController
  *
  * @author Arles Cerrato
  */
-class ErrorPageController extends Controller {
+class AdminController extends Controller {
     
-    
-    /*
-     * Se ejecuta la plantilla de Error
-     */
     public function exec()
     {
-        $this->render("Error.php");
+        $this->render("login.php");
     }
 
 }

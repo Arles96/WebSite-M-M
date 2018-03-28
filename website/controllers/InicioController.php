@@ -21,7 +21,7 @@ class InicioController extends Controller{
      */
     public function exec()
     {
-        $this->render("Inicio");
+        $this->render("Inicio.php");
     }
 
 }

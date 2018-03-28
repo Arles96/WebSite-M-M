@@ -35,7 +35,7 @@ class View {
      * Renderiza la pantilla solicitada
      */
     protected function render(){
-        $file = ROOT.'/'.PATH_VIEWS .$this->template .".php";
+        $file = ROOT.'/'.PATH_VIEWS .$this->template;
         if (is_file($file))
         {
             extract($this->params);
