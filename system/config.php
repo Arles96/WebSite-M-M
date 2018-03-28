@@ -15,6 +15,7 @@ define('FOLDER_PATH', '/WebSite-M-M');
 define('ROOT', $_SERVER['DOCUMENT_ROOT']);
 define('PATH_VIEWS', FOLDER_PATH.'/website/views/');
 define('PATH_CONTROLLERS', 'website/controllers/');
+define('PATH_MODELS', FOLDER_PATH.'/website/models/');
 define('HELPER_PATH', '/system/helpers');
 define('LIBS_ROUTE', ROOT.FOLDER_PATH.'/system/libs/');
 
@@ -35,7 +36,7 @@ define('DEFAULT_CONTROLLER', 'Inicio');
 define('HOST', 'localhost');
 define('USER', 'root');
 define('PASSWORD', '');
-define('DB_NAME', 'website_mm');
+define('DB_NAME', 'website');
 
 /*
  * Valores de configuración

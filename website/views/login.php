@@ -4,17 +4,18 @@
     <div class="login-box">
       <img src="<?php echo PATH_IMG."logo.jpg" ?>" class="avatar" alt="Avatar Image">
       <h1>Login Here</h1>
-      <form>
+      <form method="POST" action="<?= FOLDER_PATH.'/Admin/signin' ?>">
         <!-- USERNAME INPUT -->
         <label for="username">Correo</label>
-        <input type="text" placeholder="Ingrese correo">
+        <input type="text" placeholder="Ingrese correo" name="correo">
         <!-- PASSWORD INPUT -->
         <label for="password">Contraseñia</label>
-        <input type="password" placeholder="Ingrese contraseña">
+        <input type="password" placeholder="Ingrese contraseña" name="contrasenia">
         <input type="submit" value="Log In">
         <a href="#">Lost your Password?</a><br>
         <a href="#">Don't have An account?</a>
       </form>
+     <?php !empty($error) ? print($error) : '' ?>
     </div>
 </body>
 

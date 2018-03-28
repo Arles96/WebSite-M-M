@@ -1,0 +1,10 @@
+<html>
+    <head>
+        <title>Acceso Denegado</title>
+    </head>
+    <body>
+        <h1>Acceso Denegado</h1>        
+    </body>
+</html>
+
+
