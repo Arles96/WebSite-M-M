@@ -99,6 +99,50 @@
       .login-box a:hover {
         color: #fff;
       }
-
+      
+      .alert-text {
+          font-size: 12px;
+      }
+      
+      .alert-box {
+          margin: 0;
+          padding: 0;
+          width: 100% ;
+          height: 20px;
+      }
+      
+      .menu {
+          background: #F44336;
+          color : white;
+          height: 100vh;
+          text-align: center;
+      }
+      
+      .text-center{
+          text-align: center;
+      }
+      
+      .menu-text {
+          font-size: 32px;
+          width: 100% !important;
+      }
+      
+      .menu-bar {
+          margin: 50px auto;
+      }
+      
+      .title {
+          font-size: 64px !important;
+      }
+      
+      .divition {
+          width: 50px;
+          border: 5px solid red;
+      }
+      
+      .text-principal {
+          font-size: 16px;
+      }
+      
 </style>
 

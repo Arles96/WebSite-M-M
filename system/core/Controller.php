@@ -9,21 +9,21 @@ defined('BASEPATH') or exit('No se permite el acceso');
  */
 abstract class Controller {
     
-    /*
+    /**
      * @var Objeto
      */
     private $view;
     
-    /*
+    /**
      * Inicializa o renderiza la vista. 
-     * @var string template. 
-     * @var array params. Opcional
+     * @param string template. 
+     * @param array params. Opcional
      */
     public function render($template = '' , $params = array() ){
         $this->view = new View($template, $params); 
     }
     
-    /*
+    /**
      * Metodo estandar. Se ejecuta automaticamente si no se define el metodo en la url
      */
     abstract public function exec();

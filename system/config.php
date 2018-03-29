@@ -22,7 +22,7 @@ define('LIBS_ROUTE', ROOT.FOLDER_PATH.'/system/libs/');
 /**
  * Ruta para las imagenes
  */
-define('PATH_IMG', './public/img/');
+define('PATH_IMG', FOLDER_PATH.'/public/img/');
 
 /*
  * Valores de Core

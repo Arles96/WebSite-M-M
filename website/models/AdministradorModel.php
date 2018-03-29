@@ -24,5 +24,10 @@ class AdministradorModel extends Model {
         return $result;
     }
     
+    public function getAll(){
+        $sql = "SELECT * FROM `vw_administrador`";
+        return $this->db->query($sql);
+    }
+    
 }
 
