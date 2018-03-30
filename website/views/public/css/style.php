@@ -144,5 +144,9 @@
           font-size: 16px;
       }
       
+      .principal {
+          height: 100vh;
+          overflow-y: scroll;
+      }
 </style>
 

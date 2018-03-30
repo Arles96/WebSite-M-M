@@ -136,7 +136,7 @@ class AdminController extends Controller {
     public function bitacora(){
         if($this->verifySession()){
             $params = array("bitacoras"=>$this->bitacora->getAll());
-            $this->render("Admin/bitacora.php", $params);
+            $this->render("Admin/bitacoras.php", $params);
         }else {
             $this->render("Admin/Access.php");
         }
