@@ -179,6 +179,68 @@ class AdminController extends Controller {
     }
     
     /**
+     *Metodo que controla la vista de agregar un registro en la tabla de administradores
+     */
+    public function agregarAdmin(){
+         if ($this->verifySession()){
+            $params = array("mensaje"=>"");
+            $this->render("Admin/add-admin.php", $params);
+        }else {
+            $this->render("Admin/Access.php");
+        }
+    }
+    
+    /**
+     * Metodo que controla la accion de agregar un registro en la tabla administrador
+     * @param array $request  Arreglo que envia el formulario
+     */
+    public function agregandoAdmin($request){
+        if ($this->verifySession()){
+            if (empty($request['correo']) || empty($request['contrasenia'])){
+                $params = array("mensaje"=>"Alguno de los campos estan vacios");
+                $this->render("Admin/add-admin.php", $params);
+            }else {
+                $result = $this->admin->insert($request['correo'], $request['contrasenia']);
+                $this->agregarAdministrador($result);
+            }
+        }else {
+            $this->render("Admin/Access.php");
+        }
+    }
+    
+    /**
+     * Metodo private para notificar si se agregago un registro en la tabla administrador
+     */
+    private function agregarAdministrador($result){
+        if ($result) {
+            $params = array("mensaje"=>"Se ha agregado un registro");
+            $this->render("Admin/add-admin.php", $params);
+        }else {
+            $params = array("mensaje"=>"Error no se pudo agregar el registro");
+            $this->render("Admin/add-admin.php", $params);
+        }
+    }
+    
+    /**
+     * Metodo que controla la vista de actualizar un registro de la tabla administrador
+     */
+    public function modificarAdmin($param){
+        if($this->verifySession()){
+            if (!empty($param)){
+                $params = array("admin"=>$this->admin->getOne($param)->fetch_object());
+                $this->render("Admin/update-admin.php", $params);
+            }
+        }else {
+            $this->render("Admin/Access.php");
+        }
+    }
+    
+    /**
+     * 
+     */
+
+
+    /**
      * Verifica si la session existe.
      * @return Boll retorna verdadero si la sesión existe, caso contrario retorna falso
      */
@@ -189,6 +251,6 @@ class AdminController extends Controller {
         }else {
             return true;
         }
-    }
+    }   
     
 }

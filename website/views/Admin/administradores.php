@@ -15,9 +15,7 @@ include_once ROOT.FOLDER_PATH."/website/views/head.php";
                         <th>Correo</th>
                         <th>Contraseña</th>
                         <th colspan="2"> 
-                            <form method="GET" action="<?= FOLDER_PATH."/Admin/agregarAdmin"?>">
-                                <button class="btn btn-primary" type="submit">Agregar</button>
-                            </form>
+                            <a class="btn btn-primary" href="<?= FOLDER_PATH."/Admin/agregarAdmin"?>" >Agregar</a>
                         </th>
                     </tr>
                 </thead>

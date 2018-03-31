@@ -24,6 +24,15 @@ class AdministradorModel extends Model {
     }
     
     /**
+     * Metodo para seleccionar un registro de la tabla administrador
+     */
+    public function getOne($correo){
+        $correo2 = $this->db->real_escape_string($correo);
+        $sql = "SELECT * FROM `vw_administrador` WHERE CORREO='".$correo2."'";
+        return $this->db->query($sql);
+    }
+    
+    /**
      * Metodo para seleccionar todos los administradores de la tabla administrador
      */
     public function getAll(){
