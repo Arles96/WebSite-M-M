@@ -2,7 +2,7 @@
 
 defined('BASEPATH') or exit('No se permite el acceso');
 
-/*
+/**
  * Hace los require de las clases del core
  */
 spl_autoload_register(function($class) {

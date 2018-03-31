@@ -170,7 +170,12 @@ class AdminController extends Controller {
      * Metodo que controla la vista website. Muestra el registro de la tabla Informacion
      */
     public function website(){
-        
+        if ($this->verifySession()){
+            $params = array("info" => $this->website->getAll()->fetch_object());
+            $this->render("Admin/website.php", $params);
+        }else {
+            $this->render("Admin/Access.php");
+        }
     }
     
     /**

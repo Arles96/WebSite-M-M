@@ -9,17 +9,17 @@ defined('BASEPATH') or exit('No se permite el acceso');
  */
 class View {
     
-    /*
+    /**
      * @var string
      */
     protected $template;
     
-    /*
+    /**
      * @var array
      */
     protected $params;
     
-    /*
+    /**
      * Inicializa los valores y renderiza
      * @param string  $template_name
      * @param array $params. Opcional

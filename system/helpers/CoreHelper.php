@@ -9,7 +9,7 @@ defined('BASEPATH') or exit('No se permite el acceso');
  */
 class CoreHelper {
     
-    /*
+    /**
      * Funcion para saber si el controlador existe
      * @var string $controller
      */
@@ -20,7 +20,7 @@ class CoreHelper {
         return true;
     }
     
-    /*
+    /**
      * Funcion para saber si el metodo existe
      * @var string controller
      * @var string method
