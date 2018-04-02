@@ -165,7 +165,7 @@ class AdminController extends Controller {
         }
     }
     
-    //*******************Inicio con los metodos para los administradores*******************************
+    //*******************Inicio con los metodos para los administradores*******************************/
     
     /**
      * Metodo que controla la vista administradores. Muesta todos los administradores de la base de datos
@@ -266,9 +266,9 @@ class AdminController extends Controller {
         }
     }
     
-    //*******************Fin de los metodos para los administradores*******************************
+    //*******************Fin de los metodos para los administradores*******************************/
     
-    /*******************Inicio con los metodos para los clientes**************************************
+    /*******************Inicio con los metodos para los clientes**************************************/
 
     /**
      * Metodo que controla la vista clientes. Muestra todos los registros de la tabla clientes
@@ -312,7 +312,8 @@ class AdminController extends Controller {
                     header("location: ".FOLDER_PATH."/Admin/clientes");
                 }
                 else {
-                    
+                    $params = array("clientes"=> $this->cliente->getAll(), "mensaje"=>"Error al actualizar los datos de un cliente.");
+                    $this->render("Admin/clientes.php", $params);
                 }
             }else {
                 header("location: ".FOLDER_PATH."/Admin/clientes");
@@ -330,10 +331,57 @@ class AdminController extends Controller {
             return false;
         }
     }
-
-
-    /********************************Fin de los metodos de los clientes*********************************
     
+    public function eliminarCliente($num){
+        if ($this->verifySession()){
+            if (is_numeric($num)){
+                $result = $this->cliente->delete($num, $this->session->get('correo'));
+                if ($result){
+                    $params = array("clientes" => $this->cliente->getAll(), "mensaje"=>"Se elimino un cliente de la base de datos.");
+                    $this->render("Admin/clientes.php", $params);
+                }else {
+                    $params = array("clientes" => $this->cliente->getAll(), "mensaje"=>"Error al eliminar un cliente");
+                    $this->render("Admin/clientes.php", $params);
+                }
+            }
+        }else {
+            $this->render("Admin/Access.php");
+        }
+    }
+
+
+    /********************************Fin de los metodos de los clientes*********************************/
+
+    /*******************************Inicio de los metodos de la informacion del Website*************/
+    
+    public function AgregarInfo($request){
+        if ($this->verifySession()){
+            if ($this->verifyInfo($request, true)){
+                
+            }
+        }
+        else {
+        $this->render("Admin/Access.php");
+        }
+    }
+    
+    private function verifyInfo($request, $accion){
+        if ($accion){
+            if (empty($request['nosotros']) && empty($request['contacto'])){
+                return false;
+            }else {
+                return true;
+            }
+        }else {
+            if (empty($request['nosotros']) &&empty($request['contacto']) && empty($request['numero_info']) ){
+                return false;
+            }else {
+                return true;
+            }
+        }
+    }
+      
+        
     /**
      * Verifica si la session existe.
      * @return Boll retorna verdadero si la sesión existe, caso contrario retorna falso

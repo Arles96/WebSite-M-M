@@ -14,15 +14,15 @@ include_once ROOT.FOLDER_PATH."/website/views/head.php";
             if (empty($info)){
                 echo '<h2>Agregando Información</h2>'
                         . '<br>'
-                        . '<form method="POST" atcion="'.FOLDER_PATH.'/Admin/AgregarInfo" >'
+                        . '<form method="POST" action="'.FOLDER_PATH.'/Admin/AgregarInfo" >'
                         . '<div class="form-group">'
                         . '<label for="nosotros">Sobre la Distribuidora</label>'
-                        . '<textarea class="form-control" rows="4" cols="50" id="nosotros" name="nosotros" placeholder="Sobre la empresa">'
+                        . '<textarea class="form-control" rows="4" cols="50" name="nosotros" placeholder="Sobre la empresa">'
                         . '</textarea>'
                         . '</div>'
                         . '<div class="form-group">'
                         . '<label for="contacto">Texto para contactar a la Distribuidora</label>'
-                        . '<textarea class="form-control" rows="4" cols"50" id="contacto" name="contacto" placeholder="Texto que que contacten a la empresa">'
+                        . '<textarea class="form-control" rows="4" cols"50" name="contacto" placeholder="Texto que que contacten a la empresa">'
                         . '</textarea>'
                         . '</div>'
                         . '<button class="btn btn-primary" type="submit">Agregar</button>'
@@ -30,7 +30,8 @@ include_once ROOT.FOLDER_PATH."/website/views/head.php";
             }else {
                 echo '<h2>Actualizando Información</h2>'
                         . '<br>'
-                        . '<form method="POST" atcion="'.FOLDER_PATH.'/Admin/ActualizarInfo" >'
+                        . '<form method="POST" action="'.FOLDER_PATH.'/Admin/ActualizarInfo" >'
+                        . '<input type="number" values"'.$info->numero_info.'" name="numero_info" hidden>'
                         . '<div class="form-group">'
                         . '<label for="nosotros">Sobre la Distribuidora</label>'
                         . '<textarea class="form-control" rows="4" cols="50" id="nosotros" name="nosotros">'.$info->nosotros
