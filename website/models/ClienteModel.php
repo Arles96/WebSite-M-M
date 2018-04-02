@@ -33,12 +33,13 @@ class ClienteModel extends Model {
      * Metodo para actualizar un registro en la tabla clientes 
      */
     public function update($numero, $nombre, $mensaje, $correo, $telefono, $admin) {
-        $numero2 = $this->db->real_escape_string($numero);
         $nombre2 = $this->db->real_escape_string($nombre);
-        $mensaje2 = $this->db->real_escape_string($correo);
-        $correo2 = $this->db->real_escape_string($telefono);
+        $mensaje2 = $this->db->real_escape_string($mensaje);
+        $correo2 = $this->db->real_escape_string($correo);
         $admin2 = $this->db->real_escape_string($admin);
-        $sql = "CALL `UPDATE_CLIENTE`('" . $numero2 . "', '" . $nombre2 . "', '" . $mensaje2 . "', '" . $correo2 . "','" . $admin2 . "')";
+        $telefono2 = $this->db->real_escape_string($telefono);
+        echo $numero;
+        $sql = "CALL `UPDATE_CLIENTE`(".$numero.", '".$nombre2."', '".$mensaje2."', '".$correo2."', '".$telefono2."', '".$admin2."')";
         return $this->db->query($sql);
     }
 
@@ -49,6 +50,11 @@ class ClienteModel extends Model {
         $numero2 = $this->db->real_escape_string($numero);
         $admin2 = $this->db->real_escape_string($admin);
         $sql = "CALL `DELETE_CLIENTE`('" . $numero2 . "','" . $admin2 . "')";
+        return $this->db->query($sql);
+    }
+    
+    public function getOne($codigo){
+        $sql = "SELECT * FROM `vw_cliente` WHERE numero_cliente=".$codigo;
         return $this->db->query($sql);
     }
 

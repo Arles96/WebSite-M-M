@@ -9,6 +9,7 @@ include_once ROOT.FOLDER_PATH."/website/views/head.php";
         <div class="col-lg-9 principal">
             <h1 class="w3-xxlarge w3-text-red title"> <b>Administradores</b> </h1>
             <hr class="divition w3-round">
+            
             <table class="table table-bordered">
                 <thead>
                     <tr>

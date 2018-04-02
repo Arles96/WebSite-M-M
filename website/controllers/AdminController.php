@@ -118,19 +118,6 @@ class AdminController extends Controller {
     }
     
     /**
-     * Metodo que controla la vista administradores. Muesta todos los administradores de la base de datos
-     * 
-     */
-    public function administradores(){
-        if($this->verifySession()){
-            $params = array("administradores"=> $this->admin->getAll());
-            $this->render("Admin/administradores.php", $params);
-        }else {
-            $this->render("Admin/Access.php");
-        }
-    }
-    
-    /**
      * Metodo que controla la vista bitacoras. Muesta todos los registros de la tabla bitacora
      */
     public function bitacora(){
@@ -155,18 +142,6 @@ class AdminController extends Controller {
     }
     
     /**
-     * Metodo que controla la vista clientes. Muestra todos los registros de la tabla clientes
-     */
-    public function clientes(){
-        if ($this->verifySession()){
-            $params = array("clientes"=>$this->cliente->getAll());
-            $this->render("Admin/clientes.php", $params);
-        }else {
-            $this->render("Admin/Access.php");
-        }
-    }
-    
-    /**
      * Metodo que controla la vista website. Muestra el registro de la tabla Informacion
      */
     public function website(){
@@ -185,6 +160,21 @@ class AdminController extends Controller {
          if ($this->verifySession()){
             $params = array("mensaje"=>"");
             $this->render("Admin/add-admin.php", $params);
+        }else {
+            $this->render("Admin/Access.php");
+        }
+    }
+    
+    //*******************Inicio con los metodos para los administradores*******************************
+    
+    /**
+     * Metodo que controla la vista administradores. Muesta todos los administradores de la base de datos
+     * 
+     */
+    public function administradores(){
+        if($this->verifySession()){
+            $params = array("administradores"=> $this->admin->getAll());
+            $this->render("Admin/administradores.php", $params);
         }else {
             $this->render("Admin/Access.php");
         }
@@ -236,10 +226,114 @@ class AdminController extends Controller {
     }
     
     /**
-     * 
+     * Metodo que controla la actualizacion de la informacion de un registro de la tabla administrador
      */
+    public function actualizandoAdmin($request){
+        if ($this->verifySession()){
+            if ($request['correo2'] === $this->session->get('correo') && !empty($request['correo']) && !empty($request['contrasenia'])){
+                $result = $this->admin->update($request['correo2'], $request['correo'], $request['contrasenia'], $this->session->get('correo'));
+                $this->updateAdmin($result);
+            }else {
+                $params = array('mensaje' => 'Error al actualizar los datos. Tiene que ser el mismo administrador de la sesión.');
+                $this->render("Admin/update-admin.php", $params);
+            }
+        }
+    }
+    
+    /**
+     * Metodo privado que indica si se realizo la actualizacion de los datos en la tabla administradores
+     */
+    private function updateAdmin($result){
+        if ($result){
+            header("location: ".FOLDER_PATH.'/Admin/administradores');
+        }else {
+            $params = array("mensaje"=>"Error al actualizar los datos.");
+            $this->render("Admin/update-admin.php", $params);
+        }
+    }
+    
+    /**
+     * Metodo para eliminar un administrador
+     */
+    public function eliminarAdmin($admin){
+        if ($this->verifySession()){
+            if (!empty($admin)){
+                $this->admin->delete($admin, $this->session->get('correo'));
+                header("location: ".FOLDER_PATH.'/Admin/administradores');
+            }
+        }else {
+            $this->render('Admin/Access.php');
+        }
+    }
+    
+    //*******************Fin de los metodos para los administradores*******************************
+    
+    /*******************Inicio con los metodos para los clientes**************************************
+
+    /**
+     * Metodo que controla la vista clientes. Muestra todos los registros de la tabla clientes
+     */
+    public function clientes(){
+        if ($this->verifySession()){
+            $params = array("clientes"=>$this->cliente->getAll());
+            $this->render("Admin/clientes.php", $params);
+        }else {
+            $this->render("Admin/Access.php");
+        }
+    }
+    
+    /**
+     * Metodo para visualizar los datos de los clientes
+     */
+    public function modificarCliente($num){
+        if ($this->verifySession()){
+            if (is_numeric($num)){
+                $params = array("cliente"=> $this->cliente->getOne($num)->fetch_object());
+                $this->render('Admin/update-cliente.php', $params);
+            }else {
+                header("location: ".FOLDER_PATH."/Admin/clientes");
+            }
+        }
+        else {
+            $this->render("Admin/Access.php");
+        }
+    }
+    
+    /**
+     * Metodo para actualizar los datos de los clientes
+     */
+    public  function actualizandoCliente($request){
+        if ($this->verifySession()){
+            if ($this->verifyUpdateCliente($request)){
+                $result = $this->cliente->update($request['numero_cliente'], $request['nombre'], $request['mensaje'], 
+                        $request['correo'], $request['telefono'], $this->session->get('correo'));
+                var_dump($result);
+                if ($result){
+                    header("location: ".FOLDER_PATH."/Admin/clientes");
+                }
+                else {
+                    
+                }
+            }else {
+                header("location: ".FOLDER_PATH."/Admin/clientes");
+            }
+        }else {
+            $this->render("Admin/Access.php");
+        }
+    }
+    
+    private function verifyUpdateCliente($request){
+        if (is_numeric($request['numero_cliente']) && !empty($request['nombre']) && !empty($request['correo']) && 
+                !empty($request['telefono']) && !empty($request['fecha']) && !empty($request['mensaje'])){
+            return true;
+        }else {
+            return false;
+        }
+    }
 
 
+    /********************************Fin de los metodos de los clientes*********************************
+    
     /**
      * Verifica si la session existe.
      * @return Boll retorna verdadero si la sesión existe, caso contrario retorna falso

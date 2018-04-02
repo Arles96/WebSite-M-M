@@ -11,7 +11,12 @@ include_once ROOT.FOLDER_PATH."/website/views/head.php";
             <hr class="divition w3-round">
             <h2>Actualizando Administrador</h2>
             <br>
-            <form  method="POST" action="<?=FOLDER_PATH."/Admin/actualizandoAdmin/"?>">
+            <?php 
+            if (!empty($mensaje)){
+                echo '<div class="alert alert-info"><p>'.$mensaje.'</p></div>';
+            }
+            ?>
+            <form  method="POST" action="<?=FOLDER_PATH."/Admin/actualizandoAdmin"?>">
                 <input type="email" value="<?= $admin->correo?>" name="correo2" hidden>
                 <div class="form-group">
                     <label for="correo">Correo</label>
