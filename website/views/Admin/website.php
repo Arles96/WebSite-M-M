@@ -11,6 +11,9 @@ include_once ROOT.FOLDER_PATH."/website/views/head.php";
             <h1 class="w3-xxlarge w3-text-red title"> <b>Informacion del Sitio Web</b> </h1>
             <hr class="divition w3-round">
             <?php 
+            if (!empty($mensaje)){
+                echo '<div class="alert alert-info"><p>'.$mensaje.'</p></div>';
+            }
             if (empty($info)){
                 echo '<h2>Agregando Información</h2>'
                         . '<br>'
@@ -31,7 +34,7 @@ include_once ROOT.FOLDER_PATH."/website/views/head.php";
                 echo '<h2>Actualizando Información</h2>'
                         . '<br>'
                         . '<form method="POST" action="'.FOLDER_PATH.'/Admin/ActualizarInfo" >'
-                        . '<input type="number" values"'.$info->numero_info.'" name="numero_info" hidden>'
+                        . '<input type="number" value="'.$info->numero_info.'" name="numero_info" hidden >'
                         . '<div class="form-group">'
                         . '<label for="nosotros">Sobre la Distribuidora</label>'
                         . '<textarea class="form-control" rows="4" cols="50" id="nosotros" name="nosotros">'.$info->nosotros

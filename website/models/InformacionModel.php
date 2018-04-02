@@ -32,11 +32,11 @@ class InformacionModel extends Model {
      * Metodo para actualizar un registro en la tabla informacion
      */
     public function update($numero, $nosotros, $contacto, $admin) {
-        $numero2 = $this->db->real_escape_string($numero);
+     var_dump($numero);
         $nosotros2 = $this->db->real_escape_string($nosotros);
         $contacto2 = $this->db->real_escape_string($contacto);
         $admin2 = $this->db->real_escape_string($admin);
-        $sql = "CALL `UPDATE_INFORMACION`('" . $numero2 . "','" . $nosotros2 . "', '" . $contacto2 . "', '" . $admin2 . "')";
+        $sql = "CALL `UPDATE_INFORMACION`(" . $numero . ", '" . $nosotros2 . "', '" . $contacto2 . "', '" . $admin2 . "')";
         return $this->db->query($sql);
     }
 

@@ -142,18 +142,6 @@ class AdminController extends Controller {
     }
     
     /**
-     * Metodo que controla la vista website. Muestra el registro de la tabla Informacion
-     */
-    public function website(){
-        if ($this->verifySession()){
-            $params = array("info" => $this->website->getAll()->fetch_object());
-            $this->render("Admin/website.php", $params);
-        }else {
-            $this->render("Admin/Access.php");
-        }
-    }
-    
-    /**
      *Metodo que controla la vista de agregar un registro en la tabla de administradores
      */
     public function agregarAdmin(){
@@ -354,16 +342,55 @@ class AdminController extends Controller {
 
     /*******************************Inicio de los metodos de la informacion del Website*************/
     
+    /**
+     * Metodo que controla la vista website. Muestra el registro de la tabla Informacion
+     */
+    public function website(){
+        if ($this->verifySession()){
+            $params = array("info" => $this->website->getAll()->fetch_object());
+            $this->render("Admin/website.php", $params);
+        }else {
+            $this->render("Admin/Access.php");
+        }
+    }
+    
     public function AgregarInfo($request){
         if ($this->verifySession()){
             if ($this->verifyInfo($request, true)){
-                
+                $result = $this->website->insert($request['nosotros'], $request['contacto'], $this->session->get('correo'));
+                if ($result){
+                    $params = array("mensaje"=>"Se ha agregado informacion para el sitio web.", "info"=> $this->website->getAll()->fetch_object());
+                    $this->render("Admin/website.php", $params);
+                }else {
+                    $params = array("mensaje"=>"Error al  agregar informacion para el sitio web.", "info"=> $this->website->getAll());
+                    $this->render("Admin/website.php", $params);
+                }
             }
         }
         else {
         $this->render("Admin/Access.php");
         }
     }
+    
+    public function actualizarInfo($request){
+        if ($this->verifySession()){
+            if ($this->verifyInfo($request, false)){
+                $result = $this->website->update($request['numero_info'], $request['nosotros'], $request['contacto'], $this->session->get('correo'));
+                if ($result){
+                    var_dump($this->website->getAll()->fetch_object());
+                    $params = array("mensaje"=>"Se ha actualziado informacion para el sitio web.", "info"=> $this->website->getAll()->fetch_object());
+                    $this->render("Admin/website.php", $params);
+                }else {
+                    $params = array("mensaje"=>"Error al  actualizar informacion para el sitio web.", "info"=> $this->website->getAll()->fetch_object());
+                    $this->render("Admin/website.php", $params);
+                }
+            }
+        }
+        else {
+        $this->render("Admin/Access.php");
+        }
+    }
+    
     
     private function verifyInfo($request, $accion){
         if ($accion){
@@ -373,7 +400,7 @@ class AdminController extends Controller {
                 return true;
             }
         }else {
-            if (empty($request['nosotros']) &&empty($request['contacto']) && empty($request['numero_info']) ){
+            if (empty($request['nosotros']) &&empty($request['contacto']) && is_numeric($request['numero_info']) ){
                 return false;
             }else {
                 return true;
