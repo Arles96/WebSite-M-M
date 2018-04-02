@@ -11,7 +11,7 @@ include_once ROOT.FOLDER_PATH."/website/views/head.php";
             <h1 class="w3-xxlarge w3-text-red title"> <b>Clientes</b> </h1>
             <hr class="divition w3-round">
             <h2>Visualizando y Actualizando Cliente</h2>
-            <?php 
+            <?php
             if (!empty($mensaje)){
                 echo '<div class="alert alert-info"><p>'.$mensaje-'</p></div>';
             }
