@@ -48,8 +48,8 @@ include_once ROOT.FOLDER_PATH."/website/views/head.php";
                             echo '          <td>'.$row['mensaje'].'</td>';
                         }                        
                         echo '          <td>'.$row['fecha'].'</td>';
-                        echo '          <td><a href="'.FOLDER_PATH.'/Admin/modificarCliente" class="btn btn-success">Visualizar</a></td>';
-                        echo '          <td><a href="'.FOLDER_PATH.'/Admin/eliminarCliente" class="btn btn-danger">Eliminar</a></td>';
+                        echo '          <td><a href="'.FOLDER_PATH.'/Admin/modificarCliente/'.$row['numero_cliente'].'" class="btn btn-success">Visualizar</a></td>';
+                        echo '          <td><a href="'.FOLDER_PATH.'/Admin/eliminarCliente/'.$row['numero_cliente'].'" class="btn btn-danger">Eliminar</a></td>';
                         echo '      </tr>';
                     }
                     echo '  </tbody>'
