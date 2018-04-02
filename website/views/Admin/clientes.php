@@ -10,6 +10,18 @@ include_once ROOT.FOLDER_PATH."/website/views/head.php";
         <div class="col-lg-9 principal">
             <h1 class="w3-xxlarge w3-text-red title"> <b>Clientes</b> </h1>
             <hr class="divition w3-round">
+            <form class="form-inline" method="POST" action="<?= FOLDER_PATH . "/Admin/" ?>">
+                <div class="form-group">
+                    <label for="email">Nombre:</label>
+                    <input type="text" class="form-control" id="email" placeholder="Ingresar nombre" name="nombre">
+                </div>
+                <div class="form-group">
+                    <label for="date">Fecha:</label>
+                    <input type="date" class="form-control" id="date" placeholder="Ingresar fecha" name="date">
+                </div>
+                <button type="submit" class="btn btn-default">Buscar</button>
+            </form>
+            <br>
             <?php 
                 if ($clientes->num_rows>0){
                     echo '<table class="table table-bordered">';
