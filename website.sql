@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 28-03-2018 a las 06:23:12
+-- Tiempo de generación: 02-04-2018 a las 23:08:19
 -- Versión del servidor: 10.1.26-MariaDB
 -- Versión de PHP: 7.1.9
 
@@ -40,10 +40,9 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `DELETE_ADMINISTRADOR` (`CORREO2` VA
     END IF;
 END$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `DELETE_CLIENTE` (`NUMERO_CLIENTE2` INT, `ADMIN` VARCHAR(80))  BEGIN
+CREATE DEFINER=`root`@`localhost` PROCEDURE `DELETE_CLIENTE` (IN `NUMERO_CLIENTE2` INT, IN `ADMIN` VARCHAR(80))  BEGIN
 	DELETE FROM cliente WHERE NUMERO_CLIENTE=NUMERO_CLIENTE2;
-    INSERT INTO ediciones(CORREO, NUMERO_CLIENTE) VALUES (ADMIN, NUMERO_CLIENTE2);
-    INSERT INTO bitacora(CORREO_ADM, DESCRIPCION, FECHA) VALUES (ADMIN, CONCAT('Se ha eliminado el cliente: ', NUMERO_CLIENTE), NOW());
+    INSERT INTO bitacora(CORREO_ADM, DESCRIPCION, FECHA) VALUES (ADMIN, CONCAT('Se ha eliminado el cliente: ', NUMERO_CLIENTE2), NOW());
 END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `DELETE_INFORMACION` (`NUMERO_INFO2` INT, `ADMIN` VARCHAR(80))  BEGIN 
@@ -88,15 +87,15 @@ END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `LOGIN` (IN `CORREO2` VARCHAR(80), IN `CONTRASENIA2` VARCHAR(70))  SELECT CORREO FROM administrador WHERE CORREO=CORREO2 AND AES_DECRYPT(contrasenia, 'CONTRASENIA')=CONTRASENIA2$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `UPDATE_ADMINISTRADOR` (`CORREO2` VARCHAR(80), `CORREO3` VARCHAR(80), `CONTRASENIA2` VARCHAR(70), `ADMIN` VARCHAR(80))  BEGIN 
-	UPDATE administrador SET CORREO=CORREO3, CONTRASENIA=AES_ENCRYPT(CONTRASENIA2,'CONTRASENIA') WHERE CORREO=CORREO3;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `UPDATE_ADMINISTRADOR` (IN `CORREO2` VARCHAR(80), IN `CORREO3` VARCHAR(80), IN `CONTRASENIA2` VARCHAR(70), IN `ADMIN` VARCHAR(80))  BEGIN 
+	UPDATE administrador SET CORREO=CORREO3, CONTRASENIA=AES_ENCRYPT(CONTRASENIA2,'CONTRASENIA') WHERE CORREO=CORREO2;
     INSERT INTO bitacora(CORREO_ADM, DESCRIPCION, FECHA) VALUES (ADMIN, CONCAT('Ha actualizado los datos del administrador: ', CORREO2), NOW());
 END$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `UPDATE_CLIENTE` (`NUMERO_CLIENTE2` INT, `NOMBRE2` VARCHAR(100), `MENSAJE` TEXT, `CORREO2` VARCHAR(100), `TELEFONO2` VARCHAR(18), `ADMIN` VARCHAR(80))  BEGIN 
+CREATE DEFINER=`root`@`localhost` PROCEDURE `UPDATE_CLIENTE` (IN `NUMERO_CLIENTE2` INT, IN `NOMBRE2` VARCHAR(100), IN `MENSAJE2` TEXT, IN `CORREO2` VARCHAR(100), IN `TELEFONO2` VARCHAR(18), IN `ADMIN` VARCHAR(80))  BEGIN 
 	UPDATE cliente SET NOMBRE=NOMBRE2, MENSAJE=MENSAJE2, CORREO=CORREO2, TELEFONO=TELEFONO2 WHERE NUMERO_CLIENTE=NUMERO_CLIENTE2;
-    INSERT INTO ediciones(CORREO, NUMERO_CLIENTE) VALUES (ADMIN, NUMERO_CLIENTE);
-    INSERT INTO bitacora(CORREO_ADM, DESCRIPCION, FECHA) VALUES (ADMIN, CONCAT('Se realizo un edicion en el cliente: ', NUMERO_CLIENTE), NOW());
+    INSERT INTO ediciones(CORREO, NUMERO_CLIENTE) VALUES (ADMIN, NUMERO_CLIENTE2);
+    INSERT INTO bitacora(CORREO_ADM, DESCRIPCION, FECHA) VALUES (ADMIN, CONCAT('Se realizo un edicion en el cliente: ', NUMERO_CLIENTE2), NOW());
 END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `UPDATE_INFORMACION` (`NUMERO_INFO2` INT, `NOSOTROS2` TEXT, `CONTACTO` TEXT, `ADMIN` VARCHAR(80))  BEGIN 
@@ -146,7 +145,6 @@ CREATE TABLE `administrador` (
 --
 
 INSERT INTO `administrador` (`correo`, `contrasenia`) VALUES
-('arles.cerrato@gmail.com', 'ÞcX¥DyÄ¦¯UÏ\0eZýä'),
 ('aulio.cerrato@gmail.com', 'ÀáJAû0ùKp\"{Ù');
 
 -- --------------------------------------------------------
@@ -162,6 +160,18 @@ CREATE TABLE `bitacora` (
   `fecha` date DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Volcado de datos para la tabla `bitacora`
+--
+
+INSERT INTO `bitacora` (`num_bitacora`, `correo_adm`, `descripcion`, `fecha`) VALUES
+(1, 'aulio.cerrato@gmail.com', 'Hola', '2018-03-01'),
+(2, 'aulio.cerrato@gmail.com', 'Se ha eliminado el administrador: arles.cerrato@gmail.com', '2018-03-31'),
+(3, 'aulio.cerrato@gmail.com', 'Se ha eliminado el administrador: jorge.alvarez@gmail.com', '2018-03-31'),
+(4, 'aulio.cerrato@gmail.com', 'Se realizo un edicion en el cliente: 1', '2018-03-31'),
+(5, 'aulio.cerrato@gmail.com', 'Se ha eliminado el cliente: 5', '2018-04-01'),
+(6, 'aulio.cerrato@gmail.com', 'Se ha eliminado el cliente: 6', '2018-04-01');
+
 -- --------------------------------------------------------
 
 --
@@ -176,6 +186,31 @@ CREATE TABLE `cliente` (
   `correo` varchar(100) DEFAULT NULL,
   `telefono` varchar(18) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Volcado de datos para la tabla `cliente`
+--
+
+INSERT INTO `cliente` (`numero_cliente`, `fecha`, `nombre`, `mensaje`, `correo`, `telefono`) VALUES
+(1, '2018-03-02', 'Arles', 'Hola soy Goku', 'arles.cerrato@gmail.com', '9583587589'),
+(7, '2018-03-09', 'fdjshfsj', 'nfdsjfnsjdnfsdjhfdjhdsj', 'fdhjfdshj', '42432423'),
+(8, '2018-03-09', 'fdjshfsj', 'nfdsjfnsjdnfsdjhfdjhdsj', 'fdhjfdshj', '42432423'),
+(10, '2018-03-09', 'fdjshfsj', 'nfdsjfnsjdnfsdjhfdjhdsj', 'fdhjfdshj', '42432423'),
+(11, '2018-03-09', 'fdjshfsj', 'nfdsjfnsjdnfsdjhfdjhdsj', 'fdhjfdshj', '42432423'),
+(12, '2018-03-09', 'fdjshfsj', 'nfdsjfnsjdnfsdjhfdjhdsj', 'fdhjfdshj', '42432423'),
+(13, '2018-03-09', 'fdjshfsj', 'nfdsjfnsjdnfsdjhfdjhdsj', 'fdhjfdshj', '42432423'),
+(14, '2018-03-09', 'fdjshfsj', 'nfdsjfnsjdnfsdjhfdjhdsj', 'fdhjfdshj', '42432423'),
+(15, '2018-03-09', 'fdjshfsj', 'nfdsjfnsjdnfsdjhfdjhdsj', 'fdhjfdshj', '42432423'),
+(16, '2018-03-09', 'fdjshfsj', 'nfdsjfnsjdnfsdjhfdjhdsj', 'fdhjfdshj', '42432423'),
+(17, '2018-03-09', 'fdjshfsj', 'nfdsjfnsjdnfsdjhfdjhdsj', 'fdhjfdshj', '42432423'),
+(18, '2018-03-09', 'fdjshfsj', 'nfdsjfnsjdnfsdjhfdjhdsj', 'fdhjfdshj', '42432423'),
+(19, '2018-03-09', 'fdjshfsj', 'nfdsjfnsjdnfsdjhfdjhdsj', 'fdhjfdshj', '42432423'),
+(20, '2018-03-09', 'fdjshfsj', 'nfdsjfnsjdnfsdjhfdjhdsj', 'fdhjfdshj', '42432423'),
+(21, '2018-03-09', 'fdjshfsj', 'nfdsjfnsjdnfsdjhfdjhdsj', 'fdhjfdshj', '42432423'),
+(22, '2018-03-09', 'fdjshfsj', 'nfdsjfnsjdnfsdjhfdjhdsj', 'fdhjfdshj', '42432423'),
+(23, '2018-03-09', 'fdjshfsj', 'nfdsjfnsjdnfsdjhfdjhdsj', 'fdhjfdshj', '42432423'),
+(24, '2018-03-09', 'fdjshfsj', 'nfdsjfnsjdnfsdjhfdjhdsj', 'fdhjfdshj', '42432423'),
+(25, '2018-03-09', 'fdjshfsj', 'nfdsjfnsjdnfsdjhfdjhdsj', 'fdhjfdshj', '42432423');
 
 -- --------------------------------------------------------
 
@@ -201,6 +236,18 @@ CREATE TABLE `ediciones` (
   `correo` varchar(80) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Volcado de datos para la tabla `ediciones`
+--
+
+INSERT INTO `ediciones` (`num_ediciones`, `numero_cliente`, `correo`) VALUES
+(5, NULL, 'aulio.cerrato@gmail.com'),
+(6, NULL, 'aulio.cerrato@gmail.com'),
+(7, NULL, 'aulio.cerrato@gmail.com'),
+(8, NULL, 'aulio.cerrato@gmail.com'),
+(9, 1, 'aulio.cerrato@gmail.com'),
+(10, 1, 'aulio.cerrato@gmail.com');
+
 -- --------------------------------------------------------
 
 --
@@ -212,6 +259,13 @@ CREATE TABLE `informacion` (
   `nosotros` text NOT NULL,
   `contacto` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Volcado de datos para la tabla `informacion`
+--
+
+INSERT INTO `informacion` (`numero_info`, `nosotros`, `contacto`) VALUES
+(1, 'fdsfdsfds', 'fdsfdsfdsfsd');
 
 -- --------------------------------------------------------
 
@@ -227,6 +281,186 @@ CREATE TABLE `publicidad` (
   `precio` float DEFAULT NULL,
   `imagen` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Volcado de datos para la tabla `publicidad`
+--
+
+INSERT INTO `publicidad` (`codigo`, `nombre`, `tipo`, `descripcion`, `precio`, `imagen`) VALUES
+(1221, 'Chocolates', 'Golosina', 'fhdasjfhdsjafhasdjfhsjadkhfdsjka', 21, 'chocolate.jpg');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura Stand-in para la vista `vw_actualiza`
+-- (Véase abajo para la vista actual)
+--
+CREATE TABLE `vw_actualiza` (
+`num_act` int(11)
+,`correo` varchar(80)
+,`num_info` int(11)
+);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura Stand-in para la vista `vw_administrador`
+-- (Véase abajo para la vista actual)
+--
+CREATE TABLE `vw_administrador` (
+`correo` varchar(80)
+);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura Stand-in para la vista `vw_bitacora`
+-- (Véase abajo para la vista actual)
+--
+CREATE TABLE `vw_bitacora` (
+`num_bitacora` int(11)
+,`correo_adm` varchar(100)
+,`descripcion` text
+,`fecha` date
+);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura Stand-in para la vista `vw_cliente`
+-- (Véase abajo para la vista actual)
+--
+CREATE TABLE `vw_cliente` (
+`numero_cliente` int(11)
+,`fecha` date
+,`nombre` varchar(100)
+,`mensaje` text
+,`correo` varchar(100)
+,`telefono` varchar(18)
+);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura Stand-in para la vista `vw_crud`
+-- (Véase abajo para la vista actual)
+--
+CREATE TABLE `vw_crud` (
+`num_crud` int(11)
+,`codigoPublicidad` int(11)
+,`correo` varchar(80)
+);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura Stand-in para la vista `vw_ediciones`
+-- (Véase abajo para la vista actual)
+--
+CREATE TABLE `vw_ediciones` (
+`num_ediciones` int(11)
+,`numero_cliente` int(11)
+,`correo` varchar(80)
+);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura Stand-in para la vista `vw_informacion`
+-- (Véase abajo para la vista actual)
+--
+CREATE TABLE `vw_informacion` (
+`numero_info` int(11)
+,`nosotros` text
+,`contacto` text
+);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura Stand-in para la vista `vw_publicidad`
+-- (Véase abajo para la vista actual)
+--
+CREATE TABLE `vw_publicidad` (
+`codigo` int(11)
+,`nombre` varchar(80)
+,`tipo` varchar(40)
+,`descripcion` text
+,`precio` float
+,`imagen` varchar(255)
+);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura para la vista `vw_actualiza`
+--
+DROP TABLE IF EXISTS `vw_actualiza`;
+
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `vw_actualiza`  AS  select `actualiza`.`num_act` AS `num_act`,`actualiza`.`correo` AS `correo`,`actualiza`.`num_info` AS `num_info` from `actualiza` ;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura para la vista `vw_administrador`
+--
+DROP TABLE IF EXISTS `vw_administrador`;
+
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `vw_administrador`  AS  select `administrador`.`correo` AS `correo` from `administrador` ;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura para la vista `vw_bitacora`
+--
+DROP TABLE IF EXISTS `vw_bitacora`;
+
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `vw_bitacora`  AS  select `bitacora`.`num_bitacora` AS `num_bitacora`,`bitacora`.`correo_adm` AS `correo_adm`,`bitacora`.`descripcion` AS `descripcion`,`bitacora`.`fecha` AS `fecha` from `bitacora` ;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura para la vista `vw_cliente`
+--
+DROP TABLE IF EXISTS `vw_cliente`;
+
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `vw_cliente`  AS  select `cliente`.`numero_cliente` AS `numero_cliente`,`cliente`.`fecha` AS `fecha`,`cliente`.`nombre` AS `nombre`,`cliente`.`mensaje` AS `mensaje`,`cliente`.`correo` AS `correo`,`cliente`.`telefono` AS `telefono` from `cliente` ;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura para la vista `vw_crud`
+--
+DROP TABLE IF EXISTS `vw_crud`;
+
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `vw_crud`  AS  select `crud`.`num_crud` AS `num_crud`,`crud`.`codigoPublicidad` AS `codigoPublicidad`,`crud`.`correo` AS `correo` from `crud` ;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura para la vista `vw_ediciones`
+--
+DROP TABLE IF EXISTS `vw_ediciones`;
+
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `vw_ediciones`  AS  select `ediciones`.`num_ediciones` AS `num_ediciones`,`ediciones`.`numero_cliente` AS `numero_cliente`,`ediciones`.`correo` AS `correo` from `ediciones` ;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura para la vista `vw_informacion`
+--
+DROP TABLE IF EXISTS `vw_informacion`;
+
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `vw_informacion`  AS  select `informacion`.`numero_info` AS `numero_info`,`informacion`.`nosotros` AS `nosotros`,`informacion`.`contacto` AS `contacto` from `informacion` ;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura para la vista `vw_publicidad`
+--
+DROP TABLE IF EXISTS `vw_publicidad`;
+
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `vw_publicidad`  AS  select `publicidad`.`codigo` AS `codigo`,`publicidad`.`nombre` AS `nombre`,`publicidad`.`tipo` AS `tipo`,`publicidad`.`descripcion` AS `descripcion`,`publicidad`.`precio` AS `precio`,`publicidad`.`imagen` AS `imagen` from `publicidad` ;
 
 --
 -- Índices para tablas volcadas
@@ -301,13 +535,13 @@ ALTER TABLE `actualiza`
 -- AUTO_INCREMENT de la tabla `bitacora`
 --
 ALTER TABLE `bitacora`
-  MODIFY `num_bitacora` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `num_bitacora` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT de la tabla `cliente`
 --
 ALTER TABLE `cliente`
-  MODIFY `numero_cliente` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `numero_cliente` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 
 --
 -- AUTO_INCREMENT de la tabla `crud`
@@ -319,13 +553,13 @@ ALTER TABLE `crud`
 -- AUTO_INCREMENT de la tabla `ediciones`
 --
 ALTER TABLE `ediciones`
-  MODIFY `num_ediciones` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `num_ediciones` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT de la tabla `informacion`
 --
 ALTER TABLE `informacion`
-  MODIFY `numero_info` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `numero_info` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- Restricciones para tablas volcadas
