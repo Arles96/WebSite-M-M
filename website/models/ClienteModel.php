@@ -47,9 +47,8 @@ class ClienteModel extends Model {
      * Metodo para eliminar un registro en la tabla clientes 
      */
     public function delete($numero, $admin) {
-        $numero2 = $this->db->real_escape_string($numero);
         $admin2 = $this->db->real_escape_string($admin);
-        $sql = "CALL `DELETE_CLIENTE`('" . $numero2 . "','" . $admin2 . "')";
+        $sql = "CALL `DELETE_CLIENTE`(" . $numero . ",'" . $admin2 . "')";
         return $this->db->query($sql);
     }
     
