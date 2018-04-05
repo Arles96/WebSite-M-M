@@ -12,7 +12,7 @@ include_once ROOT . FOLDER_PATH . "/website/views/head.php";
             <hr class="divition w3-round">
             <?php
             if ($clientes->num_rows > 0) {
-                echo '<form class="form-inline" method="POST" action="<?= FOLDER_PATH . "/Admin/" ?>">
+                echo '<form class="form-inline" method="POST" action="<?= FOLDER_PATH . "/Clientes/" ?>
                 <div class="form-group">
                     <label for="email">Nombre:</label>
                     <input type="text" class="form-control" id="email" placeholder="Ingresar nombre" name="nombre">
@@ -27,7 +27,7 @@ include_once ROOT . FOLDER_PATH . "/website/views/head.php";
                 echo '<table class="table table-bordered">';
                 echo '  <thead>';
                 echo '      <tr>';
-                echo '          <th>Numero Cliente</th>';
+                echo '          <th>No.</th>';
                 echo '          <th>Nombre</th>';
                 echo '          <th>Correo</th>';
                 echo '          <th>Telefono</th>';
@@ -48,8 +48,8 @@ include_once ROOT . FOLDER_PATH . "/website/views/head.php";
                         echo '          <td>' . $row['mensaje'] . '</td>';
                     }
                     echo '          <td>' . $row['fecha'] . '</td>';
-                    echo '          <td><a href="' . FOLDER_PATH . '/Admin/modificarCliente/' . $row['numero_cliente'] . '" class="btn btn-success">Visualizar</a></td>';
-                    echo '          <td><a href="' . FOLDER_PATH . '/Admin/eliminarCliente/' . $row['numero_cliente'] . '" class="btn btn-danger">Eliminar</a></td>';
+                    echo '          <td><a href="' . FOLDER_PATH . '/Clientes/modificar/' . $row['numero_cliente'] . '" class="btn btn-success">Visualizar</a></td>';
+                    echo '          <td><a href="' . FOLDER_PATH . '/Clientes/eliminar/' . $row['numero_cliente'] . '" class="btn btn-danger">Eliminar</a></td>';
                     echo '      </tr>';
                 }
                 echo '  </tbody>'

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 02-04-2018 a las 23:08:19
+-- Tiempo de generación: 05-04-2018 a las 20:02:06
 -- Versión del servidor: 10.1.26-MariaDB
 -- Versión de PHP: 7.1.9
 
@@ -98,7 +98,7 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `UPDATE_CLIENTE` (IN `NUMERO_CLIENTE
     INSERT INTO bitacora(CORREO_ADM, DESCRIPCION, FECHA) VALUES (ADMIN, CONCAT('Se realizo un edicion en el cliente: ', NUMERO_CLIENTE2), NOW());
 END$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `UPDATE_INFORMACION` (`NUMERO_INFO2` INT, `NOSOTROS2` TEXT, `CONTACTO` TEXT, `ADMIN` VARCHAR(80))  BEGIN 
+CREATE DEFINER=`root`@`localhost` PROCEDURE `UPDATE_INFORMACION` (IN `NUMERO_INFO2` INT, IN `NOSOTROS2` TEXT, IN `CONTACTO2` TEXT, IN `ADMIN` VARCHAR(80))  BEGIN 
 	UPDATE informacion SET NOSOTROS=NOSOTROS2, CONTACTO=CONTACTO2 WHERE NUMERO_INFO=NUMERO_INFO2;
     INSERT INTO actualiza(CORREO, NUM_INFO) VALUES (ADMIN, NUMERO_INFO2);
     INSERT INTO bitacora(CORREO_ADM, DESCRIPCION, FECHA) VALUES (ADMIN, 'Se ha realizado una acción en la tabla informacion', NOW());
@@ -128,6 +128,14 @@ CREATE TABLE `actualiza` (
   `correo` varchar(80) DEFAULT NULL,
   `num_info` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Volcado de datos para la tabla `actualiza`
+--
+
+INSERT INTO `actualiza` (`num_act`, `correo`, `num_info`) VALUES
+(1, 'aulio.cerrato@gmail.com', 1),
+(2, 'aulio.cerrato@gmail.com', 1);
 
 -- --------------------------------------------------------
 
@@ -170,7 +178,12 @@ INSERT INTO `bitacora` (`num_bitacora`, `correo_adm`, `descripcion`, `fecha`) VA
 (3, 'aulio.cerrato@gmail.com', 'Se ha eliminado el administrador: jorge.alvarez@gmail.com', '2018-03-31'),
 (4, 'aulio.cerrato@gmail.com', 'Se realizo un edicion en el cliente: 1', '2018-03-31'),
 (5, 'aulio.cerrato@gmail.com', 'Se ha eliminado el cliente: 5', '2018-04-01'),
-(6, 'aulio.cerrato@gmail.com', 'Se ha eliminado el cliente: 6', '2018-04-01');
+(6, 'aulio.cerrato@gmail.com', 'Se ha eliminado el cliente: 6', '2018-04-01'),
+(7, 'aulio.cerrato@gmail.com', 'Se ha realizado una acción en la tabla informacion', '2018-04-02'),
+(8, 'aulio.cerrato@gmail.com', 'Se ha eliminado el administrador: arles.cerrato@gmail.com', '2018-04-02'),
+(9, 'aulio.cerrato@gmail.com', 'Se ha eliminado el cliente: 7', '2018-04-05'),
+(10, 'aulio.cerrato@gmail.com', 'Se realizo un edicion en el cliente: 1', '2018-04-05'),
+(11, 'aulio.cerrato@gmail.com', 'Se ha realizado una acción en la tabla informacion', '2018-04-05');
 
 -- --------------------------------------------------------
 
@@ -192,8 +205,7 @@ CREATE TABLE `cliente` (
 --
 
 INSERT INTO `cliente` (`numero_cliente`, `fecha`, `nombre`, `mensaje`, `correo`, `telefono`) VALUES
-(1, '2018-03-02', 'Arles', 'Hola soy Goku', 'arles.cerrato@gmail.com', '9583587589'),
-(7, '2018-03-09', 'fdjshfsj', 'nfdsjfnsjdnfsdjhfdjhdsj', 'fdhjfdshj', '42432423'),
+(1, '2018-03-02', 'Aulio', 'Hola soy Goku', 'arles.cerrato@gmail.com', '9583587589'),
 (8, '2018-03-09', 'fdjshfsj', 'nfdsjfnsjdnfsdjhfdjhdsj', 'fdhjfdshj', '42432423'),
 (10, '2018-03-09', 'fdjshfsj', 'nfdsjfnsjdnfsdjhfdjhdsj', 'fdhjfdshj', '42432423'),
 (11, '2018-03-09', 'fdjshfsj', 'nfdsjfnsjdnfsdjhfdjhdsj', 'fdhjfdshj', '42432423'),
@@ -246,7 +258,8 @@ INSERT INTO `ediciones` (`num_ediciones`, `numero_cliente`, `correo`) VALUES
 (7, NULL, 'aulio.cerrato@gmail.com'),
 (8, NULL, 'aulio.cerrato@gmail.com'),
 (9, 1, 'aulio.cerrato@gmail.com'),
-(10, 1, 'aulio.cerrato@gmail.com');
+(10, 1, 'aulio.cerrato@gmail.com'),
+(11, 1, 'aulio.cerrato@gmail.com');
 
 -- --------------------------------------------------------
 
@@ -265,7 +278,7 @@ CREATE TABLE `informacion` (
 --
 
 INSERT INTO `informacion` (`numero_info`, `nosotros`, `contacto`) VALUES
-(1, 'fdsfdsfds', 'fdsfdsfdsfsd');
+(1, 'Hola de nuevo', 'Hola');
 
 -- --------------------------------------------------------
 
@@ -529,13 +542,13 @@ ALTER TABLE `publicidad`
 -- AUTO_INCREMENT de la tabla `actualiza`
 --
 ALTER TABLE `actualiza`
-  MODIFY `num_act` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `num_act` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `bitacora`
 --
 ALTER TABLE `bitacora`
-  MODIFY `num_bitacora` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `num_bitacora` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT de la tabla `cliente`
@@ -553,7 +566,7 @@ ALTER TABLE `crud`
 -- AUTO_INCREMENT de la tabla `ediciones`
 --
 ALTER TABLE `ediciones`
-  MODIFY `num_ediciones` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `num_ediciones` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT de la tabla `informacion`

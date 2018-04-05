@@ -17,7 +17,7 @@ include_once ROOT.FOLDER_PATH."/website/views/head.php";
             if (empty($info)){
                 echo '<h2>Agregando Información</h2>'
                         . '<br>'
-                        . '<form method="POST" action="'.FOLDER_PATH.'/Admin/AgregarInfo" >'
+                        . '<form method="POST" action="'.FOLDER_PATH.'/Info/AgregarInfo" >'
                         . '<div class="form-group">'
                         . '<label for="nosotros">Sobre la Distribuidora</label>'
                         . '<textarea class="form-control" rows="4" cols="50" name="nosotros" placeholder="Sobre la empresa">'
@@ -33,7 +33,7 @@ include_once ROOT.FOLDER_PATH."/website/views/head.php";
             }else {
                 echo '<h2>Actualizando Información</h2>'
                         . '<br>'
-                        . '<form method="POST" action="'.FOLDER_PATH.'/Admin/ActualizarInfo" >'
+                        . '<form method="POST" action="'.FOLDER_PATH.'/Info/ActualizarInfo" >'
                         . '<input type="number" value="'.$info->numero_info.'" name="numero_info" hidden >'
                         . '<div class="form-group">'
                         . '<label for="nosotros">Sobre la Distribuidora</label>'

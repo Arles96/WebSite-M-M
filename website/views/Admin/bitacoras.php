@@ -14,7 +14,7 @@ include_once ROOT . FOLDER_PATH . "/website/views/head.php";
             <?php
             if ($bitacoras->num_rows > 0) {
                 echo '
-                <form class="form-inline" method="POST" action="<?= FOLDER_PATH . "/Admin/" ?>">
+                <form class="form-inline" method="POST" action="<?= FOLDER_PATH . "/Bitacora/" ?>
                 <div class="form-group">
                     <label for="email">Email:</label>
                     <input type="email" class="form-control" id="email" placeholder="Ingresar correo" name="email">

@@ -13,7 +13,7 @@ include_once ROOT . FOLDER_PATH . "/website/views/head.php";
             <?php
             if ($publicidades->num_rows > 0) {
                 echo '
-                <form class="form-inline" method="POST" action="<?= FOLDER_PATH . "/Admin/" ?>">
+                <form class="form-inline" method="POST" action="<?= FOLDER_PATH . "/Publicidad/" ?>
                 <div class="form-group">
                     <label for="email">Nombre:</label>
                     <input type="text" class="form-control" id="nombre" placeholder="Ingresar nombre" name="nombre">
@@ -47,8 +47,8 @@ include_once ROOT . FOLDER_PATH . "/website/views/head.php";
                     }
                     echo '          <td>' . $row['precio'] . '</td>';
                     echo '          <td>' . $row['imagen'] . '</td>';
-                    echo "<td><a href='" . FOLDER_PATH . "/Admin/modificarPublicidad/" . $row['codigo'] . "' class='btn btn-success'>Editar</a></td>";
-                    echo "<td><a href='" . FOLDER_PATH . "/Admin/eliminarPublicidad/" . $row['codigo'] . "' class='btn btn-danger'>Eliminar</a></td>";
+                    echo "<td><a href='" . FOLDER_PATH . "/Publicidad/modificar/" . $row['codigo'] . "' class='btn btn-success'>Editar</a></td>";
+                    echo "<td><a href='" . FOLDER_PATH . "/Publicidad/eliminar/" . $row['codigo'] . "' class='btn btn-danger'>Eliminar</a></td>";
                     echo '      </tr>';
                 }
                 echo '  </tbody>'

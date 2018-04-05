@@ -16,7 +16,7 @@ include_once ROOT.FOLDER_PATH."/website/views/head.php";
                 echo '<div class="alert alert-info"><p>'.$mensaje-'</p></div>';
             }
             ?>
-            <form  method="POST" action="<?=FOLDER_PATH."/Admin/actualizandoCliente"?>">
+            <form  method="POST" action="<?=FOLDER_PATH."/Clientes/actualizando"?>">
                 <input type="number" value="<?= $cliente->numero_cliente?>" name="numero_cliente" hidden>
                 <div class="form-group">
                     <label for="nombre">Nombre</label>
