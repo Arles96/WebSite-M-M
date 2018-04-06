@@ -57,4 +57,23 @@ class ClienteModel extends Model {
         return $this->db->query($sql);
     }
 
+    public function findName($name){
+        $nombre = $this->db->real_escape_string($name);
+        $sql = "SELECT * FROM `vw_cliente` WHERE `nombre` LIKE '%".$nombre."%'";
+        return $this->db->query($sql);
+    }
+    
+    public function findDate ($date){
+        $fecha = $this->db->real_escape_string($date);
+        $sql = "SELECT * FROM `vw_cliente` WHERE `fecha`='".$fecha."'";
+        return $this->db->query($sql);
+    }
+    
+    public function findNameDate($name, $date){
+        $nombre = $this->db->real_escape_string($name);
+        $fecha = $this->db->real_escape_string($date);
+        $sql = "SELECT * FROM `vw_cliente` WHERE `nombre` LIKE '%".$nombre."%' AND `fecha`='".$fecha."'";
+        return $this->db->query($sql);
+    }
+    
 }

@@ -582,28 +582,28 @@ ALTER TABLE `informacion`
 -- Filtros para la tabla `actualiza`
 --
 ALTER TABLE `actualiza`
-  ADD CONSTRAINT `actualiza_ibfk_1` FOREIGN KEY (`correo`) REFERENCES `administrador` (`correo`),
-  ADD CONSTRAINT `actualiza_ibfk_2` FOREIGN KEY (`num_info`) REFERENCES `informacion` (`numero_info`);
+  ADD CONSTRAINT `actualiza_ibfk_1` FOREIGN KEY (`correo`) REFERENCES `administrador` (`correo`) ON UPDATE CASCADE ON DELETE CASCADE,
+  ADD CONSTRAINT `actualiza_ibfk_2` FOREIGN KEY (`num_info`) REFERENCES `informacion` (`numero_info`) ON UPDATE CASCADE ON DELETE CASCADE;
 
 --
 -- Filtros para la tabla `bitacora`
 --
 ALTER TABLE `bitacora`
-  ADD CONSTRAINT `bitacora_ibfk_1` FOREIGN KEY (`correo_adm`) REFERENCES `administrador` (`correo`);
+  ADD CONSTRAINT `bitacora_ibfk_1` FOREIGN KEY (`correo_adm`) REFERENCES `administrador` (`correo`) ON UPDATE CASCADE ON DELETE CASCADE;
 
 --
 -- Filtros para la tabla `crud`
 --
 ALTER TABLE `crud`
-  ADD CONSTRAINT `crud_ibfk_1` FOREIGN KEY (`codigoPublicidad`) REFERENCES `publicidad` (`codigo`),
-  ADD CONSTRAINT `crud_ibfk_2` FOREIGN KEY (`correo`) REFERENCES `administrador` (`correo`);
+  ADD CONSTRAINT `crud_ibfk_1` FOREIGN KEY (`codigoPublicidad`) REFERENCES `publicidad` (`codigo`) ON UPDATE CASCADE ON DELETE CASCADE,
+  ADD CONSTRAINT `crud_ibfk_2` FOREIGN KEY (`correo`) REFERENCES `administrador` (`correo`) ON UPDATE CASCADE ON DELETE CASCADE;
 
 --
 -- Filtros para la tabla `ediciones`
 --
 ALTER TABLE `ediciones`
-  ADD CONSTRAINT `ediciones_ibfk_1` FOREIGN KEY (`numero_cliente`) REFERENCES `cliente` (`numero_cliente`),
-  ADD CONSTRAINT `ediciones_ibfk_2` FOREIGN KEY (`correo`) REFERENCES `administrador` (`correo`);
+  ADD CONSTRAINT `ediciones_ibfk_1` FOREIGN KEY (`numero_cliente`) REFERENCES `cliente` (`numero_cliente`) ON UPDATE CASCADE ON DELETE CASCADE,
+  ADD CONSTRAINT `ediciones_ibfk_2` FOREIGN KEY (`correo`) REFERENCES `administrador` (`correo`) ON UPDATE CASCADE ON DELETE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

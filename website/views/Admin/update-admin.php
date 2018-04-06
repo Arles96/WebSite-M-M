@@ -17,14 +17,13 @@ include_once ROOT.FOLDER_PATH."/website/views/head.php";
             }
             ?>
             <form  method="POST" action="<?=FOLDER_PATH."/Admin/actualizandoAdmin"?>">
-                <input type="email" value="<?= $admin->correo?>" name="correo2" hidden>
                 <div class="form-group">
                     <label for="correo">Correo</label>
                     <input type="email" class="form-control" id="correo" name="correo" value="<?= $admin->correo ?>"  required > 
                 </div>
                 <div class="form-group">
                     <label for="contrasenia">Contraseña</label>
-                    <input type="password" class="form-control" id="contrasenia" name="contrasenia" value="*****************"  required> 
+                    <input type="password" class="form-control" id="contrasenia" name="contrasenia"> 
                 </div>
                 <button class="btn btn-success" type="submit">Actualizar</button>
            </form>

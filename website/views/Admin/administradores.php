@@ -9,10 +9,10 @@ include_once ROOT . FOLDER_PATH . "/website/views/head.php";
         <div class="col-lg-9 principal">
             <h1 class="w3-xxlarge w3-text-red title"> <b>Administradores</b> </h1>
             <hr class="divition w3-round">
-            <form class="form-inline" method="POST" action="<?= FOLDER_PATH . "/Admin/" ?>">
+            <form class="form-inline" method="POST" action="<?= FOLDER_PATH . "/Admin/busqueda" ?>">
                 <div class="form-group">
                     <label for="email">Email:</label>
-                    <input type="email" class="form-control" id="email" placeholder="Enter email" name="email">
+                    <input type="text" class="form-control" id="email" placeholder="Enter email" name="email">
                 </div>
                 <button type="submit" class="btn btn-default">Buscar</button>
             </form>

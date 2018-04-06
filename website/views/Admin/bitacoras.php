@@ -10,14 +10,13 @@ include_once ROOT . FOLDER_PATH . "/website/views/head.php";
         <div class="col-lg-9 principal">
             <h1 class="w3-xxlarge w3-text-red title"> <b>Bitacora</b> </h1>
             <hr class="divition w3-round">
-
             <?php
             if ($bitacoras->num_rows > 0) {
                 echo '
-                <form class="form-inline" method="POST" action="<?= FOLDER_PATH . "/Bitacora/" ?>
+                <form class="form-inline" method="POST" action="'.FOLDER_PATH .'/Bitacora/buscar" >
                 <div class="form-group">
                     <label for="email">Email:</label>
-                    <input type="email" class="form-control" id="email" placeholder="Ingresar correo" name="email">
+                    <input type="text" class="form-control" id="email" placeholder="Ingresar correo" name="email">
                 </div>
                 <div class="form-group">
                     <label for="date">Fecha:</label>
@@ -46,6 +45,21 @@ include_once ROOT . FOLDER_PATH . "/website/views/head.php";
                 echo '  </tbody>'
                 . '</table>';
             } else {
+                if (!empty($busqueda)){
+                    echo '
+                        <form class="form-inline" method="POST" action="'. FOLDER_PATH . '/Bitacora/buscar" >
+                        <div class="form-group">
+                            <label for="email">Email:</label>
+                            <input type="text" class="form-control" id="email" placeholder="Ingresar correo" name="email">
+                        </div>
+                        <div class="form-group">
+                            <label for="date">Fecha:</label>
+                            <input type="date" class="form-control" id="date" placeholder="Ingresar fecha" name="fecha">
+                        </div>
+                        <button type="submit" class="btn btn-default">Buscar</button>
+                        </form>
+                        <br>';
+                }
                 echo '<div class="alert alert-info"><p>No hay registros en la bitacora</p></div>';
             }
             ?>

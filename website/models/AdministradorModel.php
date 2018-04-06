@@ -80,5 +80,11 @@ class AdministradorModel extends Model {
         return $this->db->query($sql);
     }
     
+    public function find($correo){
+        $correo2 = $this->db->real_escape_string($correo);
+        $sql = "SELECT * FROM `vw_administrador` WHERE `correo` LIKE '%".$correo2."%'";
+        return $this->db->query($sql);
+    }
+    
 }
 

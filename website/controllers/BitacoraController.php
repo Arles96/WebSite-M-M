@@ -41,5 +41,23 @@ class BitacoraController extends Controller{
             return true;
         }
     }  
-
+    
+    public function buscar($request){
+        if ($this->verifySession()){
+            if (empty($request['email'])){
+                $params = array("bitacoras"=> $this->bitacora->findDates($request['fecha']), "busqueda" => true);
+                $this->render("Admin/bitacoras.php", $params);
+            }else if (empty ($request['fecha'])){
+                $params = array("bitacoras"=> $this->bitacora->findEmail($request['email']), "busqueda" => true);
+                $this->render("Admin/bitacoras.php", $params);
+            }else if (!empty ($request['email']) && !empty ($request['fecha'])) {
+                $params = array("bitacoras"=> $this->bitacora->findEmailDate($request['email'], $request['fecha']), "busqueda" => true);
+                $this->render("Admin/bitacoras.php", $params);
+            }else {
+                header("location: ".FOLDER_PATH."/Bitacora"); 
+            }
+        }else {
+        $this->render("Admin/Access.php");
+        }
+    }
 }

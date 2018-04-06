@@ -12,7 +12,7 @@ include_once ROOT . FOLDER_PATH . "/website/views/head.php";
             <hr class="divition w3-round">
             <?php
             if ($clientes->num_rows > 0) {
-                echo '<form class="form-inline" method="POST" action="<?= FOLDER_PATH . "/Clientes/" ?>
+                echo '<form class="form-inline" method="POST" action="'.FOLDER_PATH .'/Clientes/buscar">
                 <div class="form-group">
                     <label for="email">Nombre:</label>
                     <input type="text" class="form-control" id="email" placeholder="Ingresar nombre" name="nombre">
@@ -55,7 +55,23 @@ include_once ROOT . FOLDER_PATH . "/website/views/head.php";
                 echo '  </tbody>'
                 . '</table>';
             } else {
-                echo '<div class="alert alert-info"><p>No hay registros en la tabla clientes.</p></div>';
+                if (!empty($busqueda)){
+                    echo '<form class="form-inline" method="POST" action="'.FOLDER_PATH .'/Clientes/buscar">
+                        <div class="form-group">
+                            <label for="email">Nombre:</label>
+                            <input type="text" class="form-control" id="email" placeholder="Ingresar nombre" name="nombre">
+                        </div>
+                        <div class="form-group">
+                            <label for="date">Fecha:</label>
+                            <input type="date" class="form-control" id="date" placeholder="Ingresar fecha" name="date">
+                        </div>
+                        <button type="submit" class="btn btn-default">Buscar</button>
+                        </form>
+                        <br>';
+                    echo '<div class="alert alert-info"><p>No hay registros.</p></div>';
+                }else {
+                    echo '<div class="alert alert-info"><p>No hay registros en la tabla clientes.</p></div>';
+                }                
             }
             ?>
         </div>

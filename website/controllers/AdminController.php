@@ -2,9 +2,7 @@
 defined('BASEPATH') or exit('No se permite acceso directo');
 require_once ROOT . FOLDER_PATH .'/website/models/AdministradorModel.php';
 require_once ROOT . FOLDER_PATH .'/website/models/BitacoraModel.php';
-require_once ROOT . FOLDER_PATH .'/website/models/ClienteModel.php';
-require_once ROOT . FOLDER_PATH .'/website/models/InformacionModel.php';
-require_once ROOT . FOLDER_PATH .'/website/models/PublicidadModel.php';
+
 require_once LIBS_ROUTE.'Session.php';
 /**
  * Esta clase se encarga de controlar todas las acciones del administrador en la base de datos
@@ -23,35 +21,12 @@ class AdminController extends Controller {
     private $admin;
     
     /**
-     * Atributo para contener el modelo de la tabla Bitacora
-     */
-    private $bitacora;
-    
-    /**
-     * Atributo para contener el modelo de la tabla Cliente
-     */
-    private $cliente;
-    
-    /**
-     * Atributo para contener el modelo de la tabla informacion
-     */
-    private $website;
-    
-    /**
-     * Atributo para contener el modelo de la tabla publicidad
-     */
-    private $publicidad;
-    
-    /**
      * Constructor de la clase AdminController. Aqui se iniciaiza la clase Session y el modelo Administrador
      */
     public function __construct() {
         $this->session = new Session();       
         $this->admin = new AdministradorModel();
         $this->bitacora = new BitacoraModel();
-        $this->cliente = new ClienteModel();
-        $this->publicidad = new PublicidadModel();
-        $this->website = new InformacionModel();
     }
     
     /**
@@ -115,13 +90,6 @@ class AdminController extends Controller {
         $this->session->init();
         $this->session->close();
         header("location: ".FOLDER_PATH."/Admin");
-    }
-    
-    /**
-     * Metodo que controla la vista publicidades. Muesta todos los registros de la tabla Publicidad
-     */
-    public function publicidad(){
-        
     }
     
     /**
@@ -201,8 +169,8 @@ class AdminController extends Controller {
      */
     public function actualizandoAdmin($request){
         if ($this->verifySession()){
-            if ($request['correo2'] === $this->session->get('correo') && !empty($request['correo']) && !empty($request['contrasenia'])){
-                $result = $this->admin->update($request['correo2'], $request['correo'], $request['contrasenia'], $this->session->get('correo'));
+            if ($request['correo'] === $this->session->get('correo') && !empty($request['correo']) && !empty($request['contrasenia'])){
+                $result = $this->admin->update($request['correo'], $request['correo'], $request['contrasenia'], $this->session->get('correo'));
                 $this->updateAdmin($result);
             }else {
                 $params = array('mensaje' => 'Error al actualizar los datos. Tiene que ser el mismo administrador de la sesión.');
@@ -230,12 +198,29 @@ class AdminController extends Controller {
         if ($this->verifySession()){
             if (!empty($admin)){
                 $this->admin->delete($admin, $this->session->get('correo'));
+                if ($admin===$this->session->get('correo')){                    
+                    header("location: ".FOLDER_PATH."/Admin/salir");
+                }else {
+                    header("location: ".FOLDER_PATH.'/Admin/administradores');
+                }
+            }else {
                 header("location: ".FOLDER_PATH.'/Admin/administradores');
             }
         }else {
             $this->render('Admin/Access.php');
         }
     }         
+    
+    public function busqueda($request){
+        if ($this->verifySession()){
+            if (!empty($request['email'])){
+                $params = array("administradores"=> $this->admin->find($request['email']));
+                $this->render("Admin/administradores.php", $params);
+            }
+        }else {
+            $this->render("Admin/Access.php");
+        }
+    }
         
     /**
      * Verifica si la session existe.

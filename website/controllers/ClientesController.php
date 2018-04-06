@@ -111,5 +111,24 @@ class ClientesController extends Controller {
             return true;
         }
     }
+    
+    public function buscar($request){
+        if ($this->verifySession()){
+            if (empty($request['nombre'])){
+                $params = array("clientes"=> $this->cliente->findDate($request['date']), "busqueda"=>true);
+                $this->render("Admin/clientes.php", $params);
+            }else if (empty($request['date'])){
+                $params = array("clientes"=> $this->cliente->findName($request['nombre']), "busqueda"=>true);
+                $this->render("Admin/clientes.php", $params);
+            }else if (empty($request['date']) && empty($request['nombre'])){
+                $params = array("clientes"=> $this->cliente->findNameDate($request['nombre'], $request['date']), "busqueda"=>true);
+                $this->render("Admin/clientes.php", $params);
+            }else {
+                header("location: ".FOLDER_PATH."/Bitacora");
+            }
+        }else {
+            $this->render("Admin/Access.php");
+        }
+    }
 
 }

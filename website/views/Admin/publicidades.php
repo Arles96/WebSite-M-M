@@ -13,7 +13,7 @@ include_once ROOT . FOLDER_PATH . "/website/views/head.php";
             <?php
             if ($publicidades->num_rows > 0) {
                 echo '
-                <form class="form-inline" method="POST" action="<?= FOLDER_PATH . "/Publicidad/" ?>
+                <form class="form-inline" method="POST" action="'.FOLDER_PATH.'/Publicidad/buscar ">
                 <div class="form-group">
                     <label for="email">Nombre:</label>
                     <input type="text" class="form-control" id="nombre" placeholder="Ingresar nombre" name="nombre">
@@ -30,9 +30,9 @@ include_once ROOT . FOLDER_PATH . "/website/views/head.php";
                 echo '          <th>Descripción</th>';
                 echo '          <th>Precio</th>';
                 echo '          <th>imagen</th>';
-                echo '          <th colspan="2"><form method="GET" action="<?= FOLDER_PATH."/Admin/Publicidad"?>
-                                        <button class="btn btn-primary" type="submit">Agregar</button>
-                                        </form></th>';
+                echo '          <th colspan="2">
+                                        <a href="'.FOLDER_PATH.'/Publicidad/agregar" class="btn btn-primary">Agregar</a>
+                                    </th>';
                 echo '  </thead>';
                 echo '  <tbody>';
                 while ($row = mysqli_fetch_array($publicidades)) {
@@ -54,7 +54,24 @@ include_once ROOT . FOLDER_PATH . "/website/views/head.php";
                 echo '  </tbody>'
                 . '</table>';
             } else {
-                echo '<div class="alert alert-info"><p>No hay registros en la tabla publicidad</p></div>';
+                if (!empty($busqueda)){
+                    echo '
+                        <form class="form-inline" method="POST" action="'.FOLDER_PATH.'/Publicidad/buscar ">
+                        <div class="form-group">
+                            <label for="email">Nombre:</label>
+                            <input type="text" class="form-control" id="nombre" placeholder="Ingresar nombre" name="nombre">
+                        </div>
+                        <button type="submit" class="btn btn-default">Buscar</button>
+                        </form>
+                        <br>';
+                    echo '<div class="alert alert-info"><p>No hay registros en la  publicidad </p>';
+                }
+                else {
+                    echo '<div class="alert alert-info"><p>No hay registros en la tabla publicidad </p>'
+                        . '<br>'
+                        . '<a href="'.FOLDER_PATH.'/Publicidad/agregar" class="btn btn-primary">Agregar</a>'
+                        . '</div>';                }
+                
             }
             ?>
         </div>
