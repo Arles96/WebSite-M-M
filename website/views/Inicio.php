@@ -50,6 +50,8 @@
                                   </div>';
                     }
                   ?>
+                    <button class="w3-button w3-display-left w3-black" onclick="plusDivs(-1)">&#10094;</button>
+                    <button class="w3-button w3-display-right w3-black" onclick="plusDivs(1)">&#10095;</button>
               </div>
           </div>
           
@@ -59,7 +61,7 @@
           <div class="w3-container w3-padding-64" id="contact">
             <h1>Contactanos</h1><br>
             <p><?= $info->contacto?></p>
-            <form action="<?= FOLDER_PATH."/Inicio/agregar"?>" target="_blank">
+            <form action="<?= FOLDER_PATH."/Inicio/agregar"?>" method="POST">
               <p><input class="w3-input w3-padding-16" type="text" placeholder="nombre" required name="nombre"></p>
               <p><input class="w3-input w3-padding-16" type="email" placeholder="correo" required name="correo"></p>
               <p><input class="w3-input w3-padding-16" type="text" placeholder="telefono" required name="telefono" ></p>

@@ -35,7 +35,8 @@ class InicioController extends Controller{
     }
     
     public function agregar($request){
-        
+        $this->cliente->insert($request['nombre'], $request['mensaje'], $request['correo'], $request['telefono']);
+        header("location: ".FOLDER_PATH."/#contact");
     }
 
 }
