@@ -33,5 +33,9 @@ class InicioController extends Controller{
         $params = array("publicidad" => $this->publicidad->getAll(), "info" => $this->website->getAll()->fetch_object());
         $this->render("Inicio.php", $params);
     }
+    
+    public function agregar($request){
+        
+    }
 
 }
